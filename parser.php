@@ -1,10 +1,5 @@
 <?php
 
-require_once('url.php');
-require_once('chara.php');
-require_once('sink.php');
-require_once('escape.php');
-require_once('measurament.php');
 require_once('analysis.php');
 
 $contents = file('index.php');
