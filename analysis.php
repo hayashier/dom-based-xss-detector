@@ -40,7 +40,7 @@ class Analyzer {
 
     public function analyze($character, $index) {
         $position = $index;
-        $match_sink = $this->sink_judge($character, $index);
+        $match_sink = $this->judge_sink($character, $index);
         if ($match_sink) {
             $position = $position + strlen($match_sink) + 1;
             for ($i = $position; $i < strlen($this->script); $i++) {
@@ -55,14 +55,17 @@ class Analyzer {
                 if ($nest === 0) {
                     $argument_strings = substr($this->script, $position, $i - $position + 1);
                     $arguments = explode(',', $argument_strings);
-                    var_dump($arguments);
+
+                    foreach($arguments as $argument) {
+                        var_dump($argument);
+                    }
                     break;
                 }
             }
         }
     }
 
-    private function sink_judge($character, $index) {
+    private function judge_sink($character, $index) {
         if (in_array($character, $this->DOM_SINK_HEAD)) {
             foreach($this->DOM_SINK as $sink) {
                 $compare = substr($this->script, $index, strlen($sink));
