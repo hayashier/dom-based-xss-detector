@@ -2,11 +2,12 @@
 
 require_once('analysis.php');
 
-$contents = file('index.php');
+$target_file = '.\\target\\'.((isset($argv[1]))? $argv[1]: 'test2.php');
+$contents = file($target_file);
 $strings = implode('', $contents);
 $tokens = token_get_all($strings);
 
-echo '<pre>';
+//echo '<pre>';
 foreach ($tokens as $token) {
     if ($token[0] === T_INLINE_HTML) {
         $strings = $token[1];
@@ -30,4 +31,4 @@ foreach ($tokens as $token) {
 
     }
 }
-echo '</pre>';
+//echo '</pre>';

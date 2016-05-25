@@ -50,3 +50,16 @@
         'prototype[@@iterator]',
         'raw'
     );
+
+    $CHARA_PARSE = array();
+    foreach ($CHARA_PROTOTYPE_METHOD as $element) {
+        $CHARA_PARSE[] = $element;
+    }
+    foreach ($CHARA_METHOD as $element) {
+        $CHARA_PARSE[] = $element;
+    }
+
+    $CHARA_PARSE_HEAD = array();
+    foreach ($CHARA_PARSE as $source) {
+        $CHARA_PARSE_HEAD[] = $source[0];
+    }
