@@ -26,6 +26,7 @@ class Analyzer {
 
         $this->URL_PARSE_PROPERTY = $URL_PARSE_PROPERTY;
         $this->URL_PARSE_METHOD = $URL_PARSE_METHOD;
+        $this->URL_PARSE = $URL_PARSE;
         $this->DOM_SINK = $DOM_SINK;
         $this->DOM_SINK_HEAD = $DOM_SINK_HEAD;
         $this->MEASURAMENT = $MEASURAMENT;
@@ -57,7 +58,7 @@ class Analyzer {
                     $arguments = explode(',', $argument_strings);
 
                     foreach($arguments as $argument) {
-                        var_dump($argument);
+                        $this->parse_argument($argument, $match_sink, $index);
                     }
                     break;
                 }
@@ -67,12 +68,27 @@ class Analyzer {
 
     private function judge_sink($character, $index) {
         if (in_array($character, $this->DOM_SINK_HEAD)) {
-            foreach($this->DOM_SINK as $sink) {
-                $compare = substr($this->script, $index, strlen($sink));
+            return $this->search_array($this->DOM_SINK, $index);
+        }
 
-                if (in_array($compare, $this->DOM_SINK)) {
-                    return $compare;
-                }
+        return false;
+    }
+
+    private function parse_argument($arg, $match_sink, $index) {
+        for ($i = 0; $i < strlen($arg); $i++) {
+            if ($arg[$i] === 'l') { // 'l' is  head of 'location.*' of JavaScript method
+                $url_source = $this->search_array($this->URL_PARSE, $index + strlen($match_sink) + $i + 1);
+                var_dump($url_source);
+            }
+        }
+    }
+
+    private function search_array($search, $index) {
+        foreach($search as $element) {
+            $compare = substr($this->script, $index, strlen($element));
+
+            if (in_array($compare, $search)) {
+                return $compare;
             }
         }
 

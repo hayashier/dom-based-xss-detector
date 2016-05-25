@@ -1,5 +1,5 @@
 <?php
-    $loc = 'window.location.';
+    $loc = 'location.';
 
     $URL_PARSE_PROPERTY = array(
         $loc.'hash',
@@ -18,3 +18,11 @@
         //$loc.'replace',
         $loc.'toString'
     );
+
+    $URL_PARSE = array();
+    foreach ($URL_PARSE_PROPERTY as $element) {
+        $URL_PARSE[] = $element;
+    }
+    foreach ($URL_PARSE_METHOD as $element) {
+        $URL_PARSE[] = $element;
+    }
