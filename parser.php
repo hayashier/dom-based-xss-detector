@@ -5,6 +5,7 @@ require_once('chara.php');
 require_once('sink.php');
 require_once('escape.php');
 require_once('measurament.php');
+require_once('analysis.php');
 
 $contents = file('index.php');
 $strings = implode('', $contents);
@@ -19,12 +20,15 @@ foreach ($tokens as $token) {
                 if (strpos($strings, '<script>', $i) === $i) {
                     $begin = strpos($strings, '<script>', $i);
                     $end = strpos($strings, '</script>', $i);
-                    $raw_script = substr($strings, $begin, $end-$begin + strlen('</script>'));
+                    $raw_script = substr($strings, $begin, $end-$begin);
                     $script = trim(substr($raw_script, strlen('<script>'), strlen($raw_script) - strlen('</script>')));
 
+                    $analyzer = new Analyzer($script);
                     for ($i = 0; $i < strlen($script); $i++) {
-                    	var_dump($script[$i]);
+                    	$analyzer->analyze($script[$i]);
                     }
+
+                    $i += strlen($script);
                 }
             }
         }
