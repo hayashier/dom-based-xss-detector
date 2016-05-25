@@ -20,7 +20,7 @@ foreach ($tokens as $token) {
 
                     $analyzer = new Analyzer($script);
                     for ($i = 0; $i < strlen($script); $i++) {
-                    	$analyzer->analyze($script[$i]);
+                    	$analyzer->analyze($script[$i], $i);
                     }
 
                     $i += strlen($script);

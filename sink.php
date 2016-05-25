@@ -11,3 +11,8 @@
         'write',
         'writeln'
     );
+    $DOM_SINK_HEAD = array();
+
+    foreach ($DOM_SINK as $sink) {
+        $DOM_SINK_HEAD[] = $sink[0];
+    }
