@@ -11,18 +11,17 @@ foreach ($tokens as $token) {
     if ($token[0] !== T_INLINE_HTML) continue;
     $strings = $token[1];
     for ($i = 0; $i < strlen($strings); $i++) {
-        if ($strings[$i] === '<') {
-            if (strpos($strings, '<script>', $i) !== $i) continue;
-              $begin = strpos($strings, '<script>', $i);
-              $end = strpos($strings, '</script>', $i);
-              $raw_script = substr($strings, $begin, $end-$begin);
-              $script = trim(substr($raw_script, strlen('<script>'), strlen($raw_script) - strlen('</script>')));
+        if ($strings[$i] !== '<') continue;
+        if (strpos($strings, '<script>', $i) !== $i) continue;
+        $begin = strpos($strings, '<script>', $i);
+        $end = strpos($strings, '</script>', $i);
+        $raw_script = substr($strings, $begin, $end-$begin);
+        $script = trim(substr($raw_script, strlen('<script>'), strlen($raw_script) - strlen('</script>')));
 
-              $analyzer = new Analyzer($script);
-              for ($j = 0; $j < strlen($script); $j++) {
-                $analyzer->analyze($script[$j], $j);
-              }
-              $i += strlen($script);
+        $analyzer = new Analyzer($script);
+        for ($j = 0; $j < strlen($script); $j++) {
+          $analyzer->analyze($script[$j], $j);
         }
+        $i += strlen($script);
     }
 }
