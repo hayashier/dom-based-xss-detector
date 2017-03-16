@@ -55,30 +55,28 @@ class Analyzer {
     public function analyze($character, $index) {
         $position = $index;
         $match_sink = $this->judge_sink($character, $index);
-        if ($match_sink) {
-            $position = $position + strlen($match_sink) + 1;
-            for ($i = $position; $i < strlen($this->script); $i++) {
-                $nest = 1;
-                if ($this->script[$i] === '(') {
-                    $nest++;
-                }
-                if ($this->script[$i] === ')') {
-                    $nest--;
-                }
+        if ($match_sink === false) return;
+        $position = $position + strlen($match_sink) + 1;
+        for ($i = $position; $i < strlen($this->script); $i++) {
+            $nest = 1;
+            if ($this->script[$i] === '(') {
+                $nest++;
+            }
+            if ($this->script[$i] === ')') {
+                $nest--;
+            }
 
-                if ($nest === 0) {
-                    $argument_strings = substr($this->script, $position, $i - $position + 1);
-                    $arguments = explode(',', $argument_strings);
+            if ($nest !== 0) continue;
+            $argument_strings = substr($this->script, $position, $i - $position + 1);
+            $arguments = explode(',', $argument_strings);
 
-                    foreach($arguments as $argument) {
-                        $result = $this->parse_argument($argument, $match_sink, $index);
-                        if ($result) {
-                            var_dump($match_sink);var_dump($result[0]);
-                        }
-                    }
-                    break;
+            foreach($arguments as $argument) {
+                $result = $this->parse_argument($argument, $match_sink, $index);
+                if ($result) {
+                    var_dump($match_sink);var_dump($result[0]);
                 }
             }
+            break;
         }
     }
 
@@ -86,7 +84,6 @@ class Analyzer {
         if (in_array($character, $this->DOM_SINK_HEAD)) {
             return $this->search_array($this->DOM_SINK, $index);
         }
-
         return false;
     }
 
