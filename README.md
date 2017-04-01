@@ -1,2 +1,8 @@
 # dom-based-xss-detector
-Detector of DOM based XSS
+Simple Detector of DOM based XSS
+
+# Usage
+
+```
+$ php parser.php test1.php
+```
